@@ -6,145 +6,65 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by Nicolae Pocroianu
  */
-public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener{
+public class MainActivity extends AppCompatActivity {
 
-    private SeekBar seekBarRed;
-    private SeekBar seekBarGreen;
-    private SeekBar seekBarBlue;
-    private SeekBar seekBarAlpha;
+    private Button automatedAdjustButton;
+    private Button manualAdjustButton;
 
-    private Intent intent;
-    private boolean floatWindowPermission = false ;
-    private final int FLOAT_WINDOW_REQUEST_CODE = 1;
-
-    public static TextView luxText;
-
-
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.layout_main_activity);
 
-        seekBarRed = (SeekBar) findViewById(R.id.seekBarRed);
-        seekBarRed.setOnSeekBarChangeListener(this);
+        automatedAdjustButton=(Button) findViewById(R.id.automatedAdjustButton);
+        manualAdjustButton=(Button) findViewById(R.id.manualAdjustButton);
 
-        seekBarGreen = (SeekBar) findViewById(R.id.seekBarGreen);
-        seekBarGreen.setOnSeekBarChangeListener(this);
+        //Sets the click handler for the AutomatedAdjustButton
+        automatedAdjustButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAutomatedAdjustActivity();
+            }
+        });
 
-        seekBarBlue = (SeekBar) findViewById(R.id.seekBarBlue);
-        seekBarBlue.setOnSeekBarChangeListener(this);
-
-        seekBarAlpha = (SeekBar) findViewById(R.id.seekBarAlpha);
-        seekBarAlpha.setOnSeekBarChangeListener(this);
-
-        luxText = (TextView) findViewById(R.id.luxView);
-
-        checkPermission();
+        //Sets the click handler for the ManualAdjustButton
+        manualAdjustButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openManualAdjustActivity();
+            }
+        });
     }
 
     /**
-     * This is implemented because when using Android API 23 or higher,you have to
-     * check for permission
+     * This will open the AutomatedAdjustActivity
      */
-    private void checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(Settings.canDrawOverlays(this)){
-                floatWindowPermission = true;
-                startBlueLightFilterService();
-                startSensorManagerService();
+    private void openAutomatedAdjustActivity(){
 
-            }else{
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                intent.setData(Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent,FLOAT_WINDOW_REQUEST_CODE);
-            }
-        }
-
+        Intent intent=new Intent(this,AutomatedAdjustActivity.class);
+        startActivity(intent);
     }
 
     /**
-     * This will start the BlueLightService
+     * This will open ManualAdjustActivity
      */
-    private void startBlueLightFilterService() {
-        intent = new Intent(this,BlueLightFilterService.class);
-        startService(intent);
-    }
+    private void openManualAdjustActivity(){
 
-    /**
-     * This will start the Sensor Manager Service
-     */
-    private void startSensorManagerService(){
-        Intent intent1 = new Intent(this, SensorService.class);
-        startService(intent1);
+        Intent intent=new Intent(this,ManualAdjustActivity.class);
+        startActivity(intent);
     }
 
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if(floatWindowPermission){
-
-
-            if(seekBar==seekBarRed)
-            {intent.putExtra("seekBarType",StaticValues.redSeekBarType);
-            }
-            if(seekBar==seekBarGreen)
-            {intent.putExtra("seekBarType",StaticValues.greenSeekBarType);
-            }
-            if(seekBar==seekBarBlue)
-            {intent.putExtra("seekBarType",StaticValues.blueSeekBarType);
-            }
-            if(seekBar==seekBarAlpha)
-            {intent.putExtra("seekBarType",StaticValues.alphaSeekBarType);
-            }
-
-
-            intent.putExtra("level",progress);
-
-            startService(intent);
-        }
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
-
-
-
-
-    /*
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case FLOAT_WINDOW_REQUEST_CODE: {
-                if (Build.VERSION.SDK_INT >= 23) {
-                    if (Settings.canDrawOverlays(this)) {
-                        floatWindowPermission = true;
-                        startBlueLightFilterService();
-                        Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                    } else {
-                        floatWindowPermission = false;
-                        Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-*/
 }

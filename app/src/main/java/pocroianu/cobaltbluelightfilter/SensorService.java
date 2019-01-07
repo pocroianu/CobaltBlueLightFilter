@@ -83,7 +83,7 @@ public class SensorService extends Service implements SensorEventListener {
     Handler handler =new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            MainActivity.luxText.setText(""+msg.arg1);
+            AutomatedAdjustActivity.lightSensorValue.setText(""+msg.arg1);
         }
     };
 

@@ -11,28 +11,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
-public class BlueLightFilterService extends Service {
+public class BlueLightService extends Service {
 
-    public static final String TAG = "BlueLightFilterService";
+    public static final String TAG = "BlueLightService";
 
     private View mOverlayView;
 
     private int currentLevel = 0;
     private int _seekBarType;
 
-    private int _redCurrentValue=0;
-    private int _greenCurrentValue=0;
-    private int _blueCurrentValue=0;
 
-
-    private WindowManager.LayoutParams params;
-    private WindowManager wm;
+    private WindowManager.LayoutParams layoutParams;
+    private WindowManager windowManager;
 
 
     /**
      *
      */
-    public BlueLightFilterService() {
+    public BlueLightService() {
     }
 
     @Override
@@ -52,7 +48,7 @@ public class BlueLightFilterService extends Service {
 
         Log.d(TAG, "onCreate");
 
-        params = new WindowManager.LayoutParams(
+        layoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
@@ -64,18 +60,18 @@ public class BlueLightFilterService extends Service {
 
         // An alpha value to apply to this entire window.
         // An alpha of 1.0 means fully opaque and 0.0 means fully transparent
-        params.alpha = 0.3F;
+        layoutParams.alpha = 0.3F;
 
         // When FLAG_DIM_BEHIND is set, this is the amount of dimming to apply.
         // Range is from 1.0 for completely opaque to 0.0 for no dim.
-        params.dimAmount = 0F;
+        layoutParams.dimAmount = 0F;
 
-        wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mOverlayView = inflater.inflate(R.layout.fiter_layout, null);
 
-        wm.addView(mOverlayView, params);
+        windowManager.addView(mOverlayView, layoutParams);
     }
 
 
@@ -89,27 +85,23 @@ public class BlueLightFilterService extends Service {
         _seekBarType = intent.getIntExtra("seekBarType" , _seekBarType);
 
         if(_seekBarType==StaticValues.redSeekBarType){
-            _redCurrentValue=currentLevel;
-            mOverlayView.setBackgroundColor(Color.rgb((int) (255-255*Math.sqrt(currentLevel *1.0/100)),_greenCurrentValue, _blueCurrentValue));
+
+            mOverlayView.setBackgroundColor(Color.rgb((int) (255*Math.sqrt(currentLevel *1.0/100)),StaticValues.greenValue, StaticValues.blueValue));
 
         }
 
         if(_seekBarType==StaticValues.greenSeekBarType){
-            _greenCurrentValue=currentLevel;
-            mOverlayView.setBackgroundColor(Color.rgb(_redCurrentValue,(int) (255-255*Math.sqrt(currentLevel *1.0/100)),_blueCurrentValue ));
+            mOverlayView.setBackgroundColor(Color.rgb(StaticValues.redValue,(int) (255*Math.sqrt(currentLevel *1.0/100)),StaticValues.blueValue ));
         }
 
         if(_seekBarType==StaticValues.blueSeekBarType){
-            _blueCurrentValue=currentLevel;
-            mOverlayView.setBackgroundColor(Color.rgb(_redCurrentValue,_greenCurrentValue, (int) (255-255*Math.sqrt(currentLevel *1.0/100))));
-        }
-
-        if(_seekBarType==StaticValues.alphaSeekBarType){
-            mOverlayView.setAlpha(currentLevel);
+            mOverlayView.setBackgroundColor(Color.rgb(StaticValues.redValue,StaticValues.greenValue, (int) (255*Math.sqrt(currentLevel *1.0/100))));
         }
 
 
-        wm.updateViewLayout(mOverlayView, params);
+
+
+        windowManager.updateViewLayout(mOverlayView, layoutParams);
 
         return START_REDELIVER_INTENT;
     }
@@ -123,8 +115,8 @@ public class BlueLightFilterService extends Service {
 
         Log.d(TAG, "onDestroy");
 
-        wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        wm.removeView(mOverlayView);
+        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        windowManager.removeView(mOverlayView);
     }
 
 
