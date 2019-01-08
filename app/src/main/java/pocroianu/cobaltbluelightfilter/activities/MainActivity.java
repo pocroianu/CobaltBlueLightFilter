@@ -6,11 +6,12 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import pocroianu.cobaltbluelightfilter.R;
-import pocroianu.cobaltbluelightfilter.fragments.AutomatedAdjustActivity;
+import pocroianu.cobaltbluelightfilter.fragments.AutomatedAdjustFragment;
 import pocroianu.cobaltbluelightfilter.fragments.HomeFragment;
-import pocroianu.cobaltbluelightfilter.fragments.ManualAdjustActivity;
+import pocroianu.cobaltbluelightfilter.fragments.ManualAdjustFragment;
 import pocroianu.cobaltbluelightfilter.fragments.SettingsFragment;
 
 /**
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Selects the required Fragment.
      */
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -54,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_manual_adjust:
-                            selectedFragment = new ManualAdjustActivity();
+                            selectedFragment = new ManualAdjustFragment();
                             break;
                         case R.id.nav_automated_adjust:
-                            selectedFragment = new AutomatedAdjustActivity();
+                            selectedFragment = new AutomatedAdjustFragment();
                             break;
 
                         case R.id.nav_settings:
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+    public void onRadioButtonSelect(View view) {
 
     }
+}
 

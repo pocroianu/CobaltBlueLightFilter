@@ -17,21 +17,32 @@ import java.util.Objects;
 import pocroianu.cobaltbluelightfilter.R;
 import pocroianu.cobaltbluelightfilter.services.AmbientLightSensorService;
 
-public class AutomatedAdjustActivity extends Fragment {
+public class AutomatedAdjustFragment extends Fragment {
 
     private Intent intent;
     public static TextView lightSensorValue;
 
     View view ;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view= inflater.inflate(R.layout.fragment_automated_adjust_activity, container, false);
+        view= inflater.inflate(R.layout.fragment_automated_adjust_fragment, container, false);
         return view;
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -39,8 +50,6 @@ public class AutomatedAdjustActivity extends Fragment {
         lightSensorValue = (TextView) view.findViewById(R.id.lightSensorValue);
         checkPermission();
     }
-
-
 
     /**
      *
@@ -68,5 +77,7 @@ public class AutomatedAdjustActivity extends Fragment {
         Intent intent1 = new Intent(view.getContext(), AmbientLightSensorService.class);
         Objects.requireNonNull(getActivity()).startService(intent1);
     }
+
+
 
 }

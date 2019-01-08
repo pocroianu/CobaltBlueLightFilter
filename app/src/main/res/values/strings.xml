@@ -7,4 +7,12 @@
     <string name="manual">Manual</string>
     <string name="settings">Settings</string>
     <string name="home_fragment">Home Fragment</string>
+    <string name="lightsensorvalue">LightSensorValue</string>
+    <string name="radiobutton0">0%</string>
+    <string name="radiobutton25">25%</string>
+    <string name="radiobutton50">50%</string>
+    <string name="radiobutton75">75%</string>
+    <string name="alphavalue">Transparency</string>
+    <string name="bluevalue">ColdTemperatureColors</string>
+    <string name="redvalue">WarmTemeperatureColors</string>
 </resources>

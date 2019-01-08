@@ -14,7 +14,7 @@ import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 
-import pocroianu.cobaltbluelightfilter.fragments.AutomatedAdjustActivity;
+import pocroianu.cobaltbluelightfilter.fragments.AutomatedAdjustFragment;
 
 public class AmbientLightSensorService extends Service implements SensorEventListener {
     SensorManager sensorManager;
@@ -85,7 +85,7 @@ public class AmbientLightSensorService extends Service implements SensorEventLis
     Handler handler =new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            AutomatedAdjustActivity.lightSensorValue.setText(""+msg.arg1);
+            AutomatedAdjustFragment.lightSensorValue.setText(""+msg.arg1 +" lux");
         }
     };
 
@@ -119,9 +119,8 @@ public class AmbientLightSensorService extends Service implements SensorEventLis
                 brightnessPercent = ((9.62 * Math.log(ambientLight) + 20));
 
             brightnessValue = (int) (2.55 * brightnessPercent);
-            Log.i(TAG," "+brightnessValue+" "+brightnessPercent);
             setScreenBrightness(brightnessValue);
-            Log.i(TAG,"Normal Method Used");
+
         }
         else{
             setScreenBrightness(255);

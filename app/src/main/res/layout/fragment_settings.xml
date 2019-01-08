@@ -10,6 +10,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
         android:text="@string/settings_fragment_name"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/test"
         android:textSize="30sp" />
 </RelativeLayout>

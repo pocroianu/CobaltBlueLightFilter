@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".fragments.AutomatedAdjustActivity">
+        <activity android:name=".fragments.AutomatedAdjustFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".fragments.ManualAdjustActivity">
+        <activity android:name=".fragments.ManualAdjustFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

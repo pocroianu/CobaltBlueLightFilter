@@ -21,7 +21,8 @@ public class ManualAdjustService extends Service {
     private View mOverlayView;
 
     private int currentLevel = 0;
-    private int _seekBarType;
+    private int seekBarType;
+    private int radioButtonType = 0;
 
 
     private WindowManager.LayoutParams layoutParams;
@@ -35,7 +36,6 @@ public class ManualAdjustService extends Service {
     }
 
     /**
-     *
      * @param intent
      * @return
      */
@@ -46,7 +46,6 @@ public class ManualAdjustService extends Service {
 
 
     /**
-     *
      * @param intent
      * @return
      */
@@ -67,20 +66,16 @@ public class ManualAdjustService extends Service {
         layoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
-                        WindowManager.LayoutParams.FLAG_DIM_BEHIND,
-                PixelFormat.TRANSLUCENT);
+                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_DIM_BEHIND, PixelFormat.TRANSLUCENT);
 
         // An alpha value to apply to this entire window.
         // An alpha of 1.0 means fully opaque and 0.0 means fully transparent
-        layoutParams.alpha = 0.1F;
+        layoutParams.alpha = StaticValues.alphaDefaultValue;
 
         // When FLAG_DIM_BEHIND is set, this is the amount of dimming to apply.
         // Range is from 1.0 for completely opaque to 0.0 for no dim.
-        layoutParams.dimAmount = 0F;
+        layoutParams.dimAmount = StaticValues.dimDefaultValue;
 
         windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -98,24 +93,27 @@ public class ManualAdjustService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         currentLevel = intent.getIntExtra("level", currentLevel);
-        _seekBarType = intent.getIntExtra("seekBarType" , _seekBarType);
+        seekBarType = intent.getIntExtra("seekBarType", seekBarType);
+        radioButtonType = intent.getIntExtra("radioButtonType" , radioButtonType);
 
-        if(_seekBarType==StaticValues.redSeekBarType){
-
-            mOverlayView.setBackgroundColor(Color.rgb((int) (255*Math.sqrt(currentLevel *1.0/100)),StaticValues.greenValue, StaticValues.blueValue));
-
+        if (seekBarType == StaticValues.redSeekBarType) {
+            mOverlayView.setBackgroundColor(Color.rgb((int) (255 * Math.sqrt(currentLevel * 1.0 / 100)), 0, StaticValues.blueValue));
         }
-
-        if(_seekBarType==StaticValues.greenSeekBarType){
-            mOverlayView.setBackgroundColor(Color.rgb(StaticValues.redValue,(int) (255*Math.sqrt(currentLevel *1.0/100)),StaticValues.blueValue ));
+        if (seekBarType == StaticValues.blueSeekBarType) {
+            mOverlayView.setBackgroundColor(Color.rgb(StaticValues.redValue, 0, (int) (255 * Math.sqrt(currentLevel * 1.0 / 100))));
         }
-
-        if(_seekBarType==StaticValues.blueSeekBarType){
-            mOverlayView.setBackgroundColor(Color.rgb(StaticValues.redValue,StaticValues.greenValue, (int) (255*Math.sqrt(currentLevel *1.0/100))));
+        if(radioButtonType == 0 ){
+            layoutParams.alpha = 0.0F;
         }
-
-
-
+        if(radioButtonType == 25 ){
+            layoutParams.alpha = 0.25F;
+        }
+        if(radioButtonType == 50 ){
+            layoutParams.alpha = 0.5F;
+        }
+        if(radioButtonType == 75 ){
+            layoutParams.alpha = 0.75F;
+        }
 
         windowManager.updateViewLayout(mOverlayView, layoutParams);
 
@@ -134,7 +132,6 @@ public class ManualAdjustService extends Service {
         windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         windowManager.removeView(mOverlayView);
     }
-
 
 
 }
