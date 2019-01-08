@@ -1,14 +1,25 @@
-package pocroianu.cobaltbluelightfilter;
+package pocroianu.cobaltbluelightfilter.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
 
-public class ManualAdjustActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener{
+import java.util.Objects;
+
+import pocroianu.cobaltbluelightfilter.R;
+import pocroianu.cobaltbluelightfilter.services.ManualAdjustService;
+import pocroianu.cobaltbluelightfilter.static_.StaticValues;
+
+public class ManualAdjustActivity extends Fragment implements SeekBar.OnSeekBarChangeListener{
 
     private SeekBar seekBarRed;
     private SeekBar seekBarGreen;
@@ -17,23 +28,36 @@ public class ManualAdjustActivity extends AppCompatActivity implements SeekBar.O
     private Intent intent;
     private boolean floatWindowPermission = false ;
 
+    View view ;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_manual_adjust_activity, container, false);
+        return view;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_manual_adjust_activity);
+    public void onActivityCreated(Bundle savedInstanceState) {
 
-        seekBarRed = (SeekBar) findViewById(R.id.seekBarRed);
+        super.onActivityCreated(savedInstanceState);
+
+        seekBarRed = (SeekBar) view.findViewById(R.id.seekBarRed);
         seekBarRed.setOnSeekBarChangeListener(this);
 
-        seekBarGreen = (SeekBar) findViewById(R.id.seekBarGreen);
+
+
+        seekBarGreen = (SeekBar) view.findViewById(R.id.seekBarGreen);
         seekBarGreen.setOnSeekBarChangeListener(this);
 
-        seekBarBlue = (SeekBar) findViewById(R.id.seekBarBlue);
+        seekBarBlue = (SeekBar) view.findViewById(R.id.seekBarBlue);
         seekBarBlue.setOnSeekBarChangeListener(this);
+
 
         checkPermission();
     }
+
 
     /**
      * This is implemented because when using Android API 23 or higher,you have to
@@ -41,13 +65,13 @@ public class ManualAdjustActivity extends AppCompatActivity implements SeekBar.O
      */
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(Settings.canDrawOverlays(this)){
+            if(Settings.canDrawOverlays(getActivity())){
                 floatWindowPermission = true;
                 startBlueLightFilterService();
 
             }else{
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                intent.setData(Uri.parse("package:" + getPackageName()));
+                intent.setData(Uri.parse("package:" + Objects.requireNonNull(getActivity()).getPackageName()));
                 int FLOAT_WINDOW_REQUEST_CODE = 1;
                 startActivityForResult(intent, FLOAT_WINDOW_REQUEST_CODE);
             }
@@ -55,13 +79,12 @@ public class ManualAdjustActivity extends AppCompatActivity implements SeekBar.O
     }
 
     /**
-     * This will start the BlueLightService
+     * This will start the ManualAdjustService
      */
     private void startBlueLightFilterService() {
-        intent = new Intent(this,BlueLightService.class);
-        startService(intent);
+        intent = new Intent(getActivity(),ManualAdjustService.class);
+        view.getContext().startService(intent);
     }
-
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -85,18 +108,18 @@ public class ManualAdjustActivity extends AppCompatActivity implements SeekBar.O
 
             intent.putExtra("level",progress);
 
-            startService(intent);
+            //If this condition is not set,the app may behave strangely.
+            Objects.requireNonNull(getActivity()).startService(intent);
         }
     }
 
 
+
+    //Unimplemented methods.
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
     }
-
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
     }
 }

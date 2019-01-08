@@ -1,4 +1,4 @@
-package pocroianu.cobaltbluelightfilter;
+package pocroianu.cobaltbluelightfilter.services;
 
 import android.app.Service;
 import android.content.Context;
@@ -11,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
-public class BlueLightService extends Service {
+import pocroianu.cobaltbluelightfilter.R;
+import pocroianu.cobaltbluelightfilter.static_.StaticValues;
 
-    public static final String TAG = "BlueLightService";
+public class ManualAdjustService extends Service {
+
+    public static final String TAG = "ManualAdjustService";
 
     private View mOverlayView;
 
@@ -28,20 +31,33 @@ public class BlueLightService extends Service {
     /**
      *
      */
-    public BlueLightService() {
+    public ManualAdjustService() {
     }
 
+    /**
+     *
+     * @param intent
+     * @return
+     */
     @Override
     public IBinder onBind(Intent intent) {
         throw null;
     }
 
 
+    /**
+     *
+     * @param intent
+     * @return
+     */
     @Override
     public boolean onUnbind(Intent intent) {
         return super.onUnbind(intent);
     }
 
+    /**
+     *
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -60,7 +76,7 @@ public class BlueLightService extends Service {
 
         // An alpha value to apply to this entire window.
         // An alpha of 1.0 means fully opaque and 0.0 means fully transparent
-        layoutParams.alpha = 0.3F;
+        layoutParams.alpha = 0.1F;
 
         // When FLAG_DIM_BEHIND is set, this is the amount of dimming to apply.
         // Range is from 1.0 for completely opaque to 0.0 for no dim.

@@ -1,6 +1,6 @@
-package pocroianu.cobaltbluelightfilter;
+package pocroianu.cobaltbluelightfilter.static_;
 
-public class StaticValues {
+public  class StaticValues {
 
     public static int redSeekBarType=0;
     public static int greenSeekBarType=1;

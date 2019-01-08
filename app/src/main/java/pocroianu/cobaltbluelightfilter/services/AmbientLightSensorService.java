@@ -1,4 +1,4 @@
-package pocroianu.cobaltbluelightfilter;
+package pocroianu.cobaltbluelightfilter.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -14,7 +14,9 @@ import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 
-public class SensorService extends Service implements SensorEventListener {
+import pocroianu.cobaltbluelightfilter.fragments.AutomatedAdjustActivity;
+
+public class AmbientLightSensorService extends Service implements SensorEventListener {
     SensorManager sensorManager;
     Sensor lightSensor;
     final static String TAG ="tag";
@@ -26,7 +28,7 @@ public class SensorService extends Service implements SensorEventListener {
     /**
      *
      */
-    public SensorService() {
+    public AmbientLightSensorService() {
     }
 
     /**

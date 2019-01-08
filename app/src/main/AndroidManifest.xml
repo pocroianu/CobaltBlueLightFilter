@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AutomatedAdjustActivity">
+        <activity android:name=".fragments.AutomatedAdjustActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ManualAdjustActivity">
+        <activity android:name=".fragments.ManualAdjustActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,12 +40,12 @@
         </activity>
 
         <service
-            android:name=".BlueLightService"
+            android:name=".services.ManualAdjustService"
             android:enabled="true"
             android:exported="true"></service>
 
         <service
-            android:name=".SensorService"
+            android:name=".services.AmbientLightSensorService"
             android:enabled="true"
             android:exported="true"></service>
     </application>
