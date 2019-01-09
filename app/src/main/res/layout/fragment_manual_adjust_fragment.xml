@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:text="@string/redvalue"
         android:textAlignment="center"
-        android:textColor="@color/test" />
+        android:textColor="@color/test"
+        android:textStyle="bold" />
 
     <Space
         android:layout_width="match_parent"
@@ -39,7 +40,8 @@
         android:layout_height="wrap_content"
         android:text="@string/bluevalue"
         android:textAlignment="center"
-        android:textColor="@color/test" />
+        android:textColor="@color/test"
+        android:textStyle="bold" />
 
     <Space
         android:layout_width="match_parent"
@@ -50,8 +52,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/alphavalue"
-        android:textAlignment="center"
-        android:textColor="@color/test" />
+        android:textAlignment="textStart"
+        android:textColor="@color/test"
+        android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/radioGroup"

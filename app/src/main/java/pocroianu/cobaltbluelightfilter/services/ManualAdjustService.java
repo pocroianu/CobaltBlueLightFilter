@@ -1,32 +1,27 @@
 package pocroianu.cobaltbluelightfilter.services;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
 
-import pocroianu.cobaltbluelightfilter.R;
+import pocroianu.cobaltbluelightfilter.activities.MainActivity;
 import pocroianu.cobaltbluelightfilter.static_.StaticValues;
 
 public class ManualAdjustService extends Service {
 
     public static final String TAG = "ManualAdjustService";
 
-    private View mOverlayView;
+
 
     private int currentLevel = 0;
     private int seekBarType;
     private int radioButtonType = 0;
 
-
-    private WindowManager.LayoutParams layoutParams;
-    private WindowManager windowManager;
+//    private View mOverlayView;
+//    private WindowManager.LayoutParams layoutParams;
+//    private WindowManager windowManager;
 
 
     /**
@@ -61,9 +56,7 @@ public class ManualAdjustService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Log.d(TAG, "onCreate");
-
-        layoutParams = new WindowManager.LayoutParams(
+        /*layoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
@@ -82,7 +75,7 @@ public class ManualAdjustService extends Service {
 
         mOverlayView = inflater.inflate(R.layout.fiter_layout, null);
 
-        windowManager.addView(mOverlayView, layoutParams);
+        windowManager.addView(mOverlayView, layoutParams);*/
     }
 
 
@@ -97,25 +90,25 @@ public class ManualAdjustService extends Service {
         radioButtonType = intent.getIntExtra("radioButtonType" , radioButtonType);
 
         if (seekBarType == StaticValues.redSeekBarType) {
-            mOverlayView.setBackgroundColor(Color.rgb((int) (255 * Math.sqrt(currentLevel * 1.0 / 100)), 0, StaticValues.blueValue));
+            MainActivity.mOverlayView.setBackgroundColor(Color.rgb((int) (255 * Math.sqrt(currentLevel * 1.0 / 100)), 0, StaticValues.blueValue));
         }
         if (seekBarType == StaticValues.blueSeekBarType) {
-            mOverlayView.setBackgroundColor(Color.rgb(StaticValues.redValue, 0, (int) (255 * Math.sqrt(currentLevel * 1.0 / 100))));
+            MainActivity.mOverlayView.setBackgroundColor(Color.rgb(StaticValues.redValue, 0, (int) (255 * Math.sqrt(currentLevel * 1.0 / 100))));
         }
         if(radioButtonType == 0 ){
-            layoutParams.alpha = 0.0F;
+            MainActivity.layoutParams.alpha = 0.0F;
         }
         if(radioButtonType == 25 ){
-            layoutParams.alpha = 0.25F;
+            MainActivity.layoutParams.alpha = 0.25F;
         }
         if(radioButtonType == 50 ){
-            layoutParams.alpha = 0.5F;
+            MainActivity.layoutParams.alpha = 0.5F;
         }
         if(radioButtonType == 75 ){
-            layoutParams.alpha = 0.75F;
+            MainActivity.layoutParams.alpha = 0.75F;
         }
 
-        windowManager.updateViewLayout(mOverlayView, layoutParams);
+        MainActivity.windowManager.updateViewLayout(MainActivity.mOverlayView, MainActivity.layoutParams);
 
         return START_REDELIVER_INTENT;
     }
@@ -129,8 +122,8 @@ public class ManualAdjustService extends Service {
 
         Log.d(TAG, "onDestroy");
 
-        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        windowManager.removeView(mOverlayView);
+        /*MainActivity.windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        MainActivity.windowManager.removeView(MainActivity.mOverlayView);*/
     }
 
 

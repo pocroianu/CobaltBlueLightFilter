@@ -78,6 +78,13 @@ public class AutomatedAdjustFragment extends Fragment {
         Objects.requireNonNull(getActivity()).startService(intent1);
     }
 
-
+    /**
+     * Called when in the MainActivity when we destroy the
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Objects.requireNonNull(getActivity()).stopService(new Intent(getContext(), AmbientLightSensorService.class));
+    }
 
 }
