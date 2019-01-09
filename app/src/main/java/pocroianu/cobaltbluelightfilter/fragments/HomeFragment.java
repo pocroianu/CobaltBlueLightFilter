@@ -22,14 +22,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view= inflater.inflate(R.layout.fragment_home, container, false);
-
         return view;
     }
 
-    /**
-     *
-     */
-    private void showContent(){
-        return;
-    }
 }

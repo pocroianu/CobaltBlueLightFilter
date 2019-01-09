@@ -2,7 +2,7 @@
     <string name="app_name">CobaltBlueLightFilter</string>
     <string name="bluelight_filter_level">BlueLight Filter Level</string>
 
-    <string name="settings_fragment_name">Settings Fragment</string>
+    <string name="settings_fragment_name">Settings</string>
     <string name="home">Home</string>
     <string name="automated">Automated</string>
     <string name="manual">Manual</string>
@@ -19,4 +19,14 @@
     <string name="alphavalue">Dim level percent</string>
     <string name="bluevalue">Cold Colors Levels</string>
     <string name="redvalue">Warm Colors Level</string>
+
+
+
+    <string name="developer_signature">Created by Pocroianu Nicolae</string>
+    <string name="app_version">App version : 0.001a</string>
+    <string name="last_update">Last update : 08.01.2018</string>
+    <string name="home_welcome_text">Blue light may suppress the production of melatonin, the sleep hormone.
+
+        CobaltBlueLightFilter filters out the blue light and dims your screen below the normal minimum,
+        so you can use your phone comfortably at night .</string>
 </resources>
